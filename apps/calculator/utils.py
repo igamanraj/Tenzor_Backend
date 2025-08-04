@@ -1,15 +1,15 @@
-import google.generativeai as generativeai
+import google.generativeai as genai
 import ast
 import json
 from PIL import Image
 from constants import GEMINI_API_KEY
 
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeaiModel(model_name="gemini-1.5-flash") 
+model = genai.GenerativeModel(model_name="gemini-2.5-flash") 
 
 
 def analyze_image(img : Image, dict_of_vars: dict):
-    dict_of_vars = json.dumps(dict_of_vars,ensure_ascii=False)
+    dict_of_vars_str = json.dumps(dict_of_vars,ensure_ascii=False)
     prompt = (
         f"You have been given an image with some mathematical expressions, equations, or graphical problems, and you need to solve them. "
         f"Note: Use the PEMDAS rule for solving mathematical expressions. PEMDAS stands for the Priority Order: Parentheses, Exponents, Multiplication and Division (from left to right), Addition and Subtraction (from left to right). Parentheses have the highest priority, followed by Exponents, then Multiplication and Division, and lastly Addition and Subtraction. "
@@ -34,6 +34,7 @@ def analyze_image(img : Image, dict_of_vars: dict):
 
 
     response = model.generate_content([prompt, img])
+    print("Response from Gemini:", response)
     print("Response from Gemini:", response.text)
     answers = []
     try:
