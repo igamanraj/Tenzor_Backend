@@ -40,4 +40,7 @@ if __name__ == "__main__":
         uvicorn.run(app, host=SERVER_URL, port=PORT, log_level="info")
     except Exception as e:
         logger.error(f"Failed to start server: {e}")
-        raise 
+        raise
+
+# For Render deployment
+app_for_render = app 
